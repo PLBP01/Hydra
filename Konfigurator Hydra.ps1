@@ -40,7 +40,7 @@ $rs = $testform.ShowDialog()
 $y=''
 if ($rs -eq [System.Windows.Forms.DialogResult]::OK)
   {
- 
+ #test
     $y = $tb.Text
     Write-Host "Wpisany nr BM:" -ForegroundColor Green
     Write-Host $y -ForegroundColor Yellow
