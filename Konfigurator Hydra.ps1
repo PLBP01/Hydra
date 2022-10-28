@@ -37,6 +37,7 @@ $testform.Controls.Add($tb)
 $testform.Topmost = $true
 $testform.Add_Shown({$tb.Select()})
 $rs = $testform.ShowDialog()
+$y=''
 if ($rs -eq [System.Windows.Forms.DialogResult]::OK)
   {
  
@@ -48,38 +49,36 @@ if ($rs -eq [System.Windows.Forms.DialogResult]::OK)
 
   $wiersz = Select-String -path "c:\.IT\PowerShell\Nowe_terminale\Lista_BM.csv" $y | Select-Object LineNumber
 
-  $wiersz
+  Write-host "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX $wiersz" -ForegroundColor Green
 
 
   #***************************************************************************************************
   $Lista_BM = Import-Csv "c:\.IT\PowerShell\Nowe_terminale\Lista_BM.csv" -delimiter ";" -Header 'Stanowisko', 'Terminal', 'Pozycja', 'Nazwa'
-  foreach ($y in $Lista_BM)
-  {
-   
-    $Terminal = $wiersz.Terminal
-    $Maszyna = $wiersz.Stanowisko 
-  }
+  
+$Terminal =  $Lista_BM[$wiersz.LineNumber-1].Terminal
+$Maszyna =  $Lista_BM[$wiersz.LineNumber-1].Stanowisko 
 
     Write-Host "Przypisany numer terminala: $Terminal" -ForegroundColor Green
     Write-Host $Terminal -ForegroundColor Yellow
     Write-Host "Przypisany numer BM: $Maszyna" -ForegroundColor Green
     Write-Host $Maszyna -ForegroundColor Yellow
 
- 
-       #Obsługa błędu
+    
+#Obsługa błędu
 
-        #xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+#xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
         function Test-Trap{
         trap {"Niepoprawny wpis"}
-        foreach ($y in $Lista_BM){
-        if ($Maszyna -NotMatch $y -or($y::isEmpty))
-            {
+        
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#to to coś???
+
+        #if ($Maszyna -NotMatch $y -or($y::isEmpty))
+        if ($y = $null -or($y::isEmpty) -or (Maszyna -notmatch $y))
+           {
               
-              Write-Host "Niepoprawny wpis: $y" -ForegroundColor Red
-
-            } 
-
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
             #Potwierdzenie wykonania
             Add-Type -AssemblyName System.Windows.Forms
             Add-Type -AssemblyName System.Drawing
@@ -105,13 +104,18 @@ if ($rs -eq [System.Windows.Forms.DialogResult]::OK)
             if ($ts -ceq[System.Windows.Forms.DialogResult]::Cancel)
             {
               Write-Host "Wpis niepoprawny lub brak BM na liście." -ForegroundColor Green
-              break
+                         
+            
             
               $Form_Cleanup_FormClosed
-          }
+              break
+              
+              
         }
-      }
+      } 
+      
           Test-Trap
+    }
 
       #koniec obłsugi błędu  
       #xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -120,6 +124,7 @@ if ($rs -eq [System.Windows.Forms.DialogResult]::OK)
                 #kopiowanie plików z folderu
               copy-item -Path a:\Baza_danych_terminali\$Terminal\* -Destination c:\.IT\PowerShell\Nowe_terminale\TEST_Kopiowania\ -force
               function Test-trap2 {
+                trap{""}
 
                 
               }
