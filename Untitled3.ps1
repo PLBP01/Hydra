@@ -1,0 +1,1 @@
+﻿Get-ChildItem -Directory -Include 511 -Name -Path a:\Baza_danych_terminali\

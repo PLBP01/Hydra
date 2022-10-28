@@ -1,0 +1,1 @@
+﻿select-String -path "c:\.IT\PowerShell\Nowe terminale\Lista_BM.txt" BM002900

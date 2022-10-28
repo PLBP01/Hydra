@@ -1,0 +1,8 @@
+CSVImportFormat>
+   <Class Type="Microsoft.Windows.Computer">
+      <Property ID="Stanowisko"/>
+      <Property ID="Terminal"/>
+      <Property ID="Pozycja"/>
+	  <Property ID="Nazwa"/>
+   </Class>
+</CSVImportFormat>
